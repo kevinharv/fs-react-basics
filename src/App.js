@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const data =  [
   { id: 1, name: 'Fido 🐕' },
@@ -21,6 +21,13 @@ function Animals() {
   );
 }
 
+function DisplayCount(props) {
+  return (
+    <>
+      <p>{props.count}</p>
+    </>
+  );
+}
 
 function Butt() {
   const [qty, setQty] = useState(0);
@@ -28,12 +35,36 @@ function Butt() {
     setQty(qty + Math.floor(Math.random() * 10));
   }
 
+  function resetCount(event) {
+    setQty(0);
+  }
+
   return (
     <>
-      <button onClick={handleClick}>{qty}</button>
+      <button onClick={handleClick}>CLICK ME</button>
+      <button onClick={resetCount}>RESET</button>
+      <DisplayCount count={qty} />
     </>
   );
 }
+
+function States() {
+  const [count, updateCount] = useState(45);
+
+  useEffect(() => {
+    console.log("YOU DID AN UPDATE")
+
+  }, [count]);
+
+  return(
+    <>
+    <button onClick={() => {updateCount(count + 2)}}>UPDATE</button>
+    <h4>{count}</h4>
+    </>
+  );
+}
+
+
 
 function App() {
   return (
@@ -44,6 +75,7 @@ function App() {
         <Animals />
 
         <Butt />
+        <States />
 
       </header>
     </div>
